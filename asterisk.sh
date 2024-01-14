@@ -8,7 +8,10 @@ CYAN='\033[0;36m'
 GRAY='\033[0;37m'
 NC='\033[0m' # No Color
 
+URLBASE="https://raw.githubusercontent.com/ExtraordinaryBen/sip-server-router-wizard/main"
 
+echo -e "${GREEN}Originally Made With Love By : AmirHossein Choghaei${NC}"
+echo -e "${MAGENTA}Modified For Personal Use By : ExtraordinaryBen${NC}"
 
 echo "Running as root..."
 sleep 2
@@ -24,7 +27,23 @@ rm /etc/asterisk/extensions.conf
 
 cd /etc/asterisk/
 
-wget https://raw.githubusercontent.com/amirhosseinchoghaei/sip-server-router/main/extensions.conf
+DIGITS=0
+
+while  [ $DIGITS -lt 1 ]; 
+do
+  read -p "Enter number of digits for Dial Plan: " DIGITS 
+  if ! [[ "$DIGITS" =~ ^[0-9]+$ ]] ; 
+    then exec >&2; echo "error: Not a number"; DIGITS=0;
+  fi
+done
+
+DIALPLAN="_"
+for i in $(seq $DIGITS); do DIALPLAN+="X"; done
+
+echo "[internal]
+exten => $DIALPLAN,1,Dial(PJSIP/\${EXTEN})
+
+" >> /etc/asterisk/extensions.conf
 
 echo "[simpletrans]
 type=transport
@@ -35,20 +54,16 @@ bind=0.0.0.0
 
 uci set asterisk.general.enabled='1'
 
-service asterisk restart
-
-sleep 1
+sed -i "s/option enabled '0'/option enabled '1'/g" /etc/config/asterisk 
 
 service asterisk restart
 
-sleep 1
-
-service asterisk restart
+sleep 5
 
 cd
 
-rm -f gip.sh && wget https://raw.githubusercontent.com/amirhosseinchoghaei/sip-server-router/main/gip.sh && chmod 777 gip.sh
+rm -f gsip.sh && wget $URLBASE/gsip.sh && chmod 777 gsip.sh
 
-cp gip.sh /sbin/gip
+cp gsip.sh /sbin/gsip
 
-echo -e "${GREEN} Made With Love By : AmirHossein Choghaei ${NC}"
+
