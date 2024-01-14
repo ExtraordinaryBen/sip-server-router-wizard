@@ -9,7 +9,7 @@ How to install?
 
 Step 1 : Run This Command in Openwrt SSH
 ```
-rm -f asterisk.sh && wget https://raw.githubusercontent.com/amirhosseinchoghaei/sip-server-router/main/asterisk.sh && chmod 777 asterisk.sh && sh asterisk.sh
+rm -f asterisk.sh && wget https://raw.githubusercontent.com/ExtraordinaryBen/sip-server-router-wizard/main/asterisk.sh && chmod 777 asterisk.sh && sh asterisk.sh
 ```
 
 Step 2 : Sip Manage Menu Command :
