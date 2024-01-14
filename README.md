@@ -1,4 +1,4 @@
-# sip-server-router
+# sip-server-router-wizard
 Use Your OpenWrt Router as a Sip Server (Asterisk)
 
 With This Script You Can Create Your own Sip Server on Your openwrt Router without any physical or Cloud Servers! 
